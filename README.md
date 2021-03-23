@@ -1,8 +1,8 @@
 # Lab-2-Interactive-mapping: Covid-19 Testing in Toronto
 
 ## Map Excerpts [screenshot]:
-![472 Lab2 Map Excerpt_MapBox GL JS](472Lab1.pn)
-![472 Lab2 Map Excerpt_Turf](472Lab1.pn)
+![472 Lab2 Map Excerpt_MapBox GLJS](472LabGLJS.png)
+![472 Lab2 Map Excerpt_Turf](472Lab2Turf.png)
 
 ## Final Map - Mapbox [interactive]:
 [Full Map](472_Lab2_mapbox.html)
@@ -74,7 +74,11 @@ Store and use GeoJSON at URL: https://docs.mapbox.com/help/troubleshooting/worki
         });
 ```
 Turf.js tutorial: https://docs.mapbox.com/help/tutorials/analysis-with-turf/
+
 Maki icons for list of symbols: https://labs.mapbox.com/maki-icons/
+
 Toronto Public Health. (2021). COVID-19 Immunization Clinics [GeoJSON]. Retrieved from https://open.toronto.ca/dataset/covid-19-immunization-clinics/
+
 Toronto Public Health. (2021). COVID-19 Testing Sites [GeoJSON]. Retrieved from https://open.toronto.ca/dataset/covid-19-testing-sites/
+
 City of Toronto, Social Development, Finance & Administration. (2021). Neighbourhoods [GeoJSON]. Retrieved from https://open.toronto.ca/dataset/neighbourhoods/
