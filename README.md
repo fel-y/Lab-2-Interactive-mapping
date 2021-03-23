@@ -1,8 +1,8 @@
 # Lab-2-Interactive-mapping: Covid-19 Testing in Toronto
 
 ## Map Excerpts [screenshot]:
-![472 Lab2 Map Excerpt_MapBox GLJS](472LabGLJS.png)
-![472 Lab2 Map Excerpt_Turf](472Lab2Turf.png)
+![472 Lab2 Map Excerpt_MapBox GLJS](Mapbox Style Files/472Lab2GLJS.png)
+![472 Lab2 Map Excerpt_Turf](Mapbox Style Files/472Lab2Turf.png)
 
 ## Final Map - Mapbox [interactive]:
 [Full Map](472_Lab2_mapbox.html)
@@ -20,11 +20,15 @@ Throughout, and hopefully near the end, the Covid-19 pandemic, many testing site
 The map focused on Central Toronto because of the lack of data surrounding immunization clinics outside of Central Toronto and into the Greater Toronto Area. From the results of these maps, there are underwhelming locations for immunization clinics relative to testing sites. With expectations for more clinics soon, this map can help city and health planners to estimate the potential demand and spread out the clinics reducing the potential stress of clinics in high-demand neighbourhoods. 
 
 
-Meaningful critiques and Improvements that would be meaningful would be to 
+Meaningful critiques and FuturevImprovements:
 * Circle radius buffers, relevant to clinic distribution
   * many clinics are within an x-km radius of a testing site?
   * How many should there be
 * The neighbourhood population density layer helps to visualize and estimate potential stress on clinics and testing sites
+* Click-Popup in Turf sometimes 'hide' the highlighted clinic
+  * have the information appear in a legend box on the edge of the map
+  * include less information in the popup
+  * hover instead of click? (given a try, did not produce an effect that I liked)
 * Using turf.js to add travel distance and best route between locations
 * Better icons and colours for easier identification
   * The hospital icon was not large enough and not brightly coloured, blends in with the background
