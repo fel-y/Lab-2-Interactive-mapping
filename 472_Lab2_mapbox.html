@@ -1,0 +1,181 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<script src="https://api.mapbox.com/mapbox-gl-js/v2.1.1/mapbox-gl.js"></script>
+	<link href="https://api.mapbox.com/mapbox-gl-js/v2.1.1/mapbox-gl.css" rel="stylesheet" />
+	<div id="map"></div>
+	<div class="map-overlay" id="features"><h2> Toronto Covid-19 Clinic </h2><div id="pd"><p>Distribution of Covid-19 Testing and Immunization clinics in Toronto. <br /> <b>Hover for neighbourhood and click for clinic detail! </b></p></div></div>
+	<div class="map-overlay" id="legend"></div> 
+	<style>
+		body {
+		  margin: 0;
+		  padding: 0;
+		}
+
+		h2,
+		h3 {
+		  margin: 10px;
+		  font-size: 1.2em;
+          text-align: center;
+		}
+
+		h3 {
+		  font-size: 1em;
+		}
+
+		p {
+		  font-size: 0.85em;
+		  margin: 10px;
+		  text-align: left;
+		}
+
+		#map {
+		  position: absolute;
+		  top: 0;
+		  bottom: 0;
+		  width: 100%;
+		}
+
+		.map-overlay {
+ 		 position: absolute;
+ 		 bottom: 0;
+ 		 right: 0;
+		  background: rgba(255, 255, 255, 0.8);
+		  margin-right: 20px;
+		  font-family: Arial, sans-serif;
+		  overflow: auto;
+		  border-radius: 3px;
+		}
+
+		#features {
+		  top: 0;
+		  height: 80px;
+		  margin-top: 20px;
+		  width: 430px;
+		}
+
+		#legend {
+ 		 padding: 10px;
+ 		 box-shadow: 0 1px 2px rgba(0, 0, 0, 0.1);
+ 		 line-height: 18px;
+		  height: 50px;
+		  margin-bottom: 50px;
+		  width: 240px;
+		}
+      
+
+		.legend-key {
+		  display: inline-block;
+		  border-radius: 20%;
+		  width: 10px;
+		  height: 10px;
+		  flex: 0 0 10px;
+		  margin-right: 5px;
+		}
+
+	</style>
+</head>
+<body>
+
+<script>
+mapboxgl.accessToken = 'pk.eyJ1IjoiZmVsLXkiLCJhIjoiY2tsY3I1ZTdvMG90azJvbWRoZDY5M3ZscCJ9.MhRD9-LaX3YYhPBwtmaWxQ';
+
+var map = new mapboxgl.Map({
+  container: 'map', // container id
+  style: 'mapbox://styles/fel-y/ckml1ug9b3saj17ogo80u5ni7', //style URL
+  center: [-79.383186, 43.73], // starting position [lng, lat]
+zoom: 10 // starting zoom
+});
+
+        // make a cursor
+        map.getCanvas().style.cursor = 'default';
+
+     // wait for map to load before adjusting it
+      map.on('load', function () {
+
+        // define layer names for legend
+        var layers = [
+          'Covid-19 Testing Site',
+          'Covid-19 Immunization Clinics',
+          'Toronto neighbourhoods'
+        ];
+        var colors = [
+          '#ec1378',
+          '#13cd9c',
+          '#c1b3ff50'
+        ];
+
+        // create legend
+        for (i = 0; i < layers.length; i++) {
+          var layer = layers[i];
+          var color = colors[i];
+          var item = document.createElement('div');
+          var key = document.createElement('span');
+          key.className = 'legend-key';
+          key.style.backgroundColor = color;
+
+          var value = document.createElement('span');
+          value.innerHTML = layer;
+          item.appendChild(key);
+          item.appendChild(value);
+          legend.appendChild(item);
+        }
+//on click, display popup with info on testing sites
+map.on('click', function(e) {
+  var features = map.queryRenderedFeatures(e.point, {
+    layers: ["covid-19-testing-sites"] // layer name in MapBox
+  });
+
+  if (!features.length) {
+    return;
+  }
+
+  var feature = features[0];
+
+  var popup = new mapboxgl.Popup({ offset: [0, -15] ,maxWidth: '300px'})
+    .setLngLat(feature.geometry.coordinates)
+    .setHTML('<h3>' + feature.properties.locationName + '</h3><p>' + '<b>' + 'Address: ' + '</b>' + feature.properties.address + ', ' +  feature.properties.city + ',' + feature.properties.postal_code +  '<br />' + '<b>' + 'Type: ' + '</b>' + feature.properties. locationType + '<br />' + '<b>' + 'Website: ' + '</b>' + feature.properties.website + '<br />' + '<b>' + 'Phone: ' + '</b>' + feature.properties.phone + '<br />' + '<b>' + 'Info: ' + '</b>' + feature.properties.info +'<br />' + '<b>' + 'Hours: ' + '</b>' + feature.properties.hours +'</p>')
+    .addTo(map);
+	});
+        
+//on click, display popup with info on immunization sites        
+map.on('click', function(e) {
+  var features = map.queryRenderedFeatures(e.point, {
+    layers: ["covid-19-immunization-clinics"] // layer name in MapBox
+  });
+
+  if (!features.length) {
+    return;
+  }
+
+  var feature = features[0];
+
+  var popup1 = new mapboxgl.Popup({ offset: [0, -15] })
+    .setLngLat(feature.geometry.coordinates)
+    .setHTML('<h3>' + feature.properties. locationName + '</h3><p>' + '<b>' + 'Address: ' + '</b>' + feature.properties.address + '<br />' +'<b>' + 'Info: ' + '</b>' + feature.properties.info + '</p>')
+    .addTo(map);
+	});
+
+
+// when hover over Toronto polygon, display popup with neighbourhood name
+var popup2 = new mapboxgl.Popup({
+    closeButton: false
+});
+    map.on('mousemove', 'toronto-neighbourhoods-poly', function(e) {
+        map.getCanvas().style.cursor = 'pointer';
+
+        var feature = e.features[0];
+
+        popup2.setLngLat(e.lngLat)
+            .setText(feature.properties.AREA_NAME)
+            .addTo(map);
+    });
+//when not hover over toronto polygon, remove popup
+    map.on('mouseleave', 'toronto-neighbourhoods-poly', function() {
+        map.getCanvas().style.cursor = '';
+        popup2.remove();
+    });
+      });
+    </script>
+  </body>
+</html>
