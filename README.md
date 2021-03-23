@@ -13,7 +13,8 @@
 <iframe src="472_Lab2_turf.html" height = '300' width="600"></iframe>
 
 
-Reflective analysis: 
+
+##Reflective analysis: 
 
 Throughout, and hopefully near the end, the Covid-19 pandemic, many testing sites have been established. As the vaccines become more widely distributed, we will hopefully see an increase in Immunization clinics! These maps hope to illustrate the distribution of testing sites and clinics in the Toronto area and help people find one in their neighbourhood. The Mapbox version shows preliminary distribution and detail of the distribution. The Turf version builds onto it and measures the closest clinic to the testing site of your choice. 
 
@@ -35,10 +36,7 @@ Meaningful critiques and FuturevImprovements:
   * The icons used for the testing site is too plain and oddly coloured, distracting from the hospital symbol
 
 
-Resources and other References:
-
-Data obtained from Open Data Toronto
-https://open.toronto.ca/
+##Resources and other References:
 
 Popup on hover: https://docs.mapbox.com/mapbox-gl-js/example/popup-on-hover/
 ```
@@ -61,6 +59,8 @@ var popup2 = new mapboxgl.Popup({
     });
 ```
 Store and use GeoJSON at URL: https://docs.mapbox.com/help/troubleshooting/working-with-large-geojson-data/
+
+saved lots of room and confusion within the code, makes updating the file much easier too 
 ```
   map.addLayer({
     id: 'clinic',
